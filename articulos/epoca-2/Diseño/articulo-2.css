@@ -1,0 +1,276 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    background: radial-gradient(circle, #2c1d11 0%, #170e08 100%);
+    color: #2b1d0c; 
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.8;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* contendedor*/
+.dossier-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    
+    /* El color beige base del papel antiguo */
+    background-color: #ebdcb9; 
+    
+    /* Un truco visual: un degradado suave que simula manchas de humedad/tiempo */
+    background-image: radial-gradient(circle at 30% 20%, #f3e7cc 0%, #ebdcb9 50%, #dfcea3 100%);
+    
+    /* Borde grueso color cuero tallado */
+    border: 3px solid #5c3a21;
+    border-radius: 4px;
+    
+    /* Sombras: la de afuera lo separa de la "mesa" y la de adentro (inset) oscurece los bordes como papel quemado */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 
+                inset 0 0 60px rgba(92, 58, 33, 0.3);
+    padding: 35px;
+    position: relative;
+}
+
+
+.dossier-header {
+
+    border-bottom: 2px dashed rgba(92, 58, 33, 0.4);
+    padding-bottom: 20px;
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Botón estilo viajero/explorador */
+.btn-volver {
+    background: #5c3a21;
+    color: #f3e7cc;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background: #412817;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.titulos {
+    text-align: center;
+}
+
+.subtitulo {
+    color: #8c5832; /* Tono sepia claro */
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.titulo-estado {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #3e2511; /* Marrón profundo */
+    letter-spacing: 1px;
+    font-family: 'Times New Roman', serif;
+}
+
+
+
+
+
+
+
+
+/* ganas de joder otra vez */
+.status-decorativo {
+    background: transparent;
+    border: 2px dashed #a62b2b; /* Rojo sangre/tinta de sello */
+    color: #a62b2b;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    font-family: Arial, sans-serif; /* Rompe la tipografía para que parezca un sello real */
+    letter-spacing: 4px;
+    font-weight: 900;
+    transform: rotate(-7deg); /* Inclinación de estampado manual */
+    opacity: 0.8;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*teto pa leer*/
+.dossier-grid {
+   display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+}
+
+section {
+    background: rgba(255, 255, 255, 0.25); 
+    padding: 25px;
+    border-radius: 4px;
+    border: 1px solid rgba(92, 58, 33, 0.15);
+}
+
+section h2 {
+    color: #5c3a21;
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(92, 58, 33, 0.2);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.panel-contexto p {
+    text-align: justify;
+    font-size: 1.1rem;
+    color: #2b1d0c;
+}
+
+
+
+
+
+
+
+
+
+/* ganas de joder*/
+.panel-contexto p::first-letter {
+    font-size: 3.8rem;
+    float: left;
+    margin-right: 12px;
+    line-height: 0.85;
+    font-weight: bold;
+    color: #a62b2b; 
+    font-family: 'Times New Roman', serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*seccion dedicada a las iamgenes de cada cartill.
+
+Andry del futuro si esas viendo esto
+recuerde revisar las propiedades de las etiquetas se veian feos antes
+
+*/
+
+
+/*seccion de fotos*/
+.galeria-fotos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+
+
+/* el marquito 
+pendiente pelao ud tiene que agregar un marco negro para que no se vea tan chafa 
+
+*/
+.foto-item {
+  
+    border: 2px solid #5c3a21; 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+}
+
+.foto-item.principal {
+    grid-column: span 2;
+}
+
+.foto-item img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    
+
+}
+
+.foto-item.principal img {
+    height: 250px;
+}
+
+
+/* animacion para cuando pasas el mouse acuerdate de cambiar la loquera esta del contraste pq no da completo  */
+.foto-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    border-color: #a62b2b; /* Cambia al color del sello */
+}
+.foto-item:hover img {
+    filter: sepia(20%) contrast(100%) brightness(100%);
+}
+
+
+
+
+
+
+
+/* poderoso responsiveeeeeeeee*/
+
+
+
+@media (max-width: 850px) {
+    .dossier-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .dossier-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -652,11 +652,7 @@ body.epoca-4 .step-btn[data-step="4"] {
     transition: 0.3s;
 }
 
-/* --- LA REGLA DE ORO --- */
-/* Esto busca la SEGUNDA cartilla y voltea su contenido */
-.cartilla-zigzag:nth-child(even) {
-    flex-direction: row-reverse;
-}
+
 
 /* Ajuste de las cajas internas */
 .cartilla-img {
@@ -692,18 +688,18 @@ body.epoca-4 .step-btn[data-step="4"] {
 
 /* Esto aplicará el color a TODO lo que esté dentro de la info de época */
 .info-epoca {
-    color: var(--color-maquina); /* Aplica el color a párrafos y textos generales */
+    color: black; /* Aplica el color a párrafos y textos generales */
 }
 
 .cartilla-info h4 {
-    color: var(--color-maquina); /* Refuerza el color en los títulos */
+    color: black; /* Refuerza el color en los títulos */
     filter: brightness(1.2);    /* Lo hace un poquito más brillante que el párrafo */
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
 .cartilla-info p {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
                  /* Un toque de transparencia para que no canse la vista */
     line-height: 1.6;           /* Mejora la lectura de los datos curiosos */
     font-size: 1.05rem;
@@ -712,7 +708,7 @@ body.epoca-4 .step-btn[data-step="4"] {
 /* Opcional: Un borde brillante que combine */
 .cartilla-zigzag {
     border: 1px solid var(--color-maquina);
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(var(--color-maquina-rgb), 0.2);
+    box-shadow: inset 0 0 15px  rgba(255, 0, 0, 0.5), 0 0 10px rgba(var(--color-maquina-rgb), 0.2);
 }
 
 .cartilla-info h4, 
@@ -722,7 +718,7 @@ body.epoca-4 .step-btn[data-step="4"] {
 
 /* Efecto Neón para los títulos */
 .cartilla-info h4 {
-    text-shadow: 0 0 8px var(--color-maquina);
+    text-shadow: 0 0 8px white;
 }
 
 
