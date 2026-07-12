@@ -89,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // ==========================================
-    // 5. REDIRECCIÓN A ARTÍCULOS POR CLIC EN EL MAPA
+   // ==========================================
+    // 5. REDIRECCIÓN CON DETECCION AUTOMÁTICA (FETCH)
     // ==========================================
     document.querySelectorAll('path').forEach(estado => {
         estado.addEventListener('click', function() {
@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const listaClases = Array.from(this.classList);
             let archivoDestino = "";
             
-            // Filtra la clase del archivo según la época activa
             if (epocaActual === 'epoca-1') {
                 archivoDestino = listaClases.find(c => c.startsWith('indigena-'));
             } else if (epocaActual === 'epoca-2') {
@@ -106,15 +105,28 @@ document.addEventListener("DOMContentLoaded", function() {
             } else if (epocaActual === 'epoca-3') {
                 archivoDestino = listaClases.find(c => c.startsWith('republica-'));
             } else {
-                archivoDestino = this.id; // Época 4 usa el ID del estado directamente
+                archivoDestino = this.id; 
             }
 
-            // Redirige a la subcarpeta de la época correspondiente si existe el archivo
             if (archivoDestino) {
-                window.location.href = `articulos/${epocaActual}/${archivoDestino}.html`;
-            } else {
-                // Cambiado a consola para evitar alertas molestas en la interfaz
-                console.warn(`Información no asignada para: ${this.id} en la ${epocaActual}`);
+                const rutaDestino = `articulos/${epocaActual}/${archivoDestino}.html`;
+                const rutaErrorPersonalizado = `articulos/pantalla-espera.html`;
+
+                // Hacemos una consulta rápida al sistema de archivos para ver si el HTML existe
+                fetch(rutaDestino, { method: 'HEAD' })
+                    .then(response => {
+                        if (response.ok) {
+                            // El archivo existe, entramos
+                            window.location.href = rutaDestino;
+                        } else {
+                            // El archivo no existe (404), redirigimos al error personalizado
+                            window.location.href = rutaErrorPersonalizado;
+                        }
+                    })
+                    .catch(() => {
+                        // Por si falla la red o bloquea el acceso local, por seguridad redirige al error
+                        window.location.href = rutaErrorPersonalizado;
+                    });
             }
         });
     });
