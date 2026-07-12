@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friday Night Funkin': Timeline Funk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050510;
+            color: #fff;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #game-container {
+            position: relative;
+            text-align: center;
+        }
+
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 650px;
+            background: rgba(10, 10, 25, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #ff007f;
+            border-radius: 10px;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        #start-screen h1 {
+            font-size: 3.5rem;
+            color: #00ffff;
+            text-shadow: 3px 3px #ff007f, -3px -3px #000;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        #start-screen p {
+            font-size: 1.2rem;
+            color: #fff;
+            font-family: sans-serif;
+            animation: blink 1s infinite;
+        }
+
+        canvas {
+            border: 4px solid #333;
+            background-color: #111;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .controls-info {
+            margin-top: 10px;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Pantalla de inicio requerida para activar el audio del navegador -->
+        <div id="start-screen" onclick="startGame()">
+            <h1>TIMELINE FUNK</h1>
+            <p>PRESIONA AQUÍ PARA EMPEZAR LA BATALLA</p>
+        </div>
+
+        <canvas id="fnfCanvas" width="600" height="650"></canvas>
+    </div>
+
+    <div class="controls-info">
+        Usa las **Flechas del Teclado** (← ↓ ↑ →) o **A, S, W, D** en el momento exacto.
+    </div>
+
+    <script>
+        const canvas = document.getElementById("fnfCanvas");
+        const ctx = canvas.getContext("2d");
+        const startScreen = document.getElementById("start-screen");
+
+        // Configuración de Audio (Sintetizador Web Audio API)
+        let audioCtx;
+        let gameRunning = false;
+
+        // Estados del juego
+        let score = 0;
+        let combo = 0;
+        let health = 50; // 0 = Pierdes, 100 = Ganas
+        let ratingText = "";
+        let ratingTimer = 0;
+        let currentEra = "PRESENTE";
+        let eraColor = "#00ffff";
+        let arrowSpeed = 6;
+        let gameTicker = 0;
+
+        // Configuración de los carriles de flechas (FNF Style)
+        const LANES = [
+            { key: ["ArrowLeft", "a", "A"], x: 130, color: "#c241bc", symbol: "←" },
+            { key: ["ArrowDown", "s", "S"], x: 230, color: "#00ffff", symbol: "↓" },
+            { key: ["ArrowUp", "w", "W"], x: 330, color: "#00ff66", symbol: "↑" },
+            { key: ["ArrowRight", "d", "D"], x: 430, color: "#ff2a2a", symbol: "→" }
+        ];
+
+        const targetY = 100; // Altura de los receptores grises superiores
+        let notes = [];
+
+        // Generador de sonidos Synth para la música de fondo rítmica
+        function playBeatTone(freq, duration, type = "square") {
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function startGame() {
+            startScreen.style.display = "none";
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            gameRunning = true;
+            loop();
+        }
+
+        // Registrar pulsaciones de teclas
+        window.addEventListener("keydown", (e) => {
+            if (!gameRunning) return;
+            
+            LANES.forEach((lane, index) => {
+                if (lane.key.includes(e.key)) {
+                    checkHit(index);
+                }
+            });
+        });
+
+        // Verificar precisión del impacto
+        function checkHit(laneIndex) {
+            let hitDetected = false;
+
+            for (let i = 0; i < notes.length; i++) {
+                let note = notes[i];
+                if (note.lane === laneIndex && !note.hit) {
+                    let distance = Math.abs(note.y - targetY);
+
+                    if (distance < 50) { // Ventana de tiempo aceptable
+                        note.hit = true;
+                        hitDetected = true;
+                        
+                        // Sistema de puntuación FNF
+                        if (distance < 15) {
+                            ratingText = "¡SICK!";
+                            score += 350;
+                            health = Math.min(100, health + 6);
+                            playBeatTone(600, 0.1, "triangle"); // Sonido nota acertada perfecta
+                        } else if (distance < 30) {
+                            ratingText = "GOOD";
+                            score += 200;
+                            health = Math.min(100, health + 3);
+                            playBeatTone(500, 0.1, "triangle");
+                        } else {
+                            ratingText = "BAD";
+                            score += 50;
+                            health = Math.max(0, health - 2);
+                            playBeatTone(300, 0.1, "sawtooth");
+                        }
+                        combo++;
+                        ratingTimer = 30; // Mostrar texto por 30 frames
+                        break;
+                    }
+                }
+            }
+
+            if (!hitDetected) {
+                // Penalización por presionar en el vacío
+                ratingText = "MISS";
+                combo = 0;
+                health = Math.max(0, health - 5);
+                ratingTimer = 30;
+                playBeatTone(150, 0.15, "sawtooth");
+            }
+        }
+
+        function update() {
+            gameTicker++;
+
+            // 1. Manejo del Tiempo y las Épocas del mapa
+            if (gameTicker < 600) {
+                currentEra = "PASADO (PREHISTORIA)";
+                eraColor = "#ffaa00";
+                arrowSpeed = 5;
+                if (gameTicker % 40 === 0) playBeatTone(110, 0.2, "sine"); // Ritmo tribal lento
+            } else if (gameTicker < 1300) {
+                currentEra = "PRESENTE (FNF STAGE)";
+                eraColor = "#00ffff";
+                arrowSpeed = 7;
+                if (gameTicker % 25 === 0) playBeatTone(220, 0.1, "square"); // Ritmo moderno funk
+            } else if (gameTicker < 2000) {
+                currentEra = "FUTURO (CYBERPUNK)";
+                eraColor = "#ff007f";
+                arrowSpeed = 10;
+                if (gameTicker % 15 === 0) playBeatTone(330, 0.08, "sawtooth"); // Ritmo cyberpunk rápido
+            } else {
+                // Reiniciar ciclo temporal
+                gameTicker = 0;
+            }
+
+            // 2. Generación aleatoria de notas siguiendo el pulso temporal
+            let spawnRate = currentEra.startsWith("FUTURO") ? 15 : (currentEra.startsWith("PRESENTE") ? 25 : 35);
+            if (gameTicker % spawnRate === 0) {
+                let randomLane = Math.floor(Math.random() * 4);
+                notes.push({
+                    lane: randomLane,
+                    y: canvas.height + 20,
+                    hit: false
+                });
+            }
+
+            // 3. Mover notas hacia arriba
+            notes.forEach(note => {
+                note.y -= arrowSpeed;
+
+                // Si la flecha pasa de largo sin ser presionada (Miss automático)
+                if (note.y < targetY - 40 && !note.hit) {
+                    note.hit = true; // Evitar restar vida infinitamente
+                    ratingText = "MISS";
+                    combo = 0;
+                    health = Math.max(0, health - 7);
+                    ratingTimer = 30;
+                    playBeatTone(120, 0.2, "sawtooth");
+                }
+            });
+
+            // Limpiar notas viejas de la memoria
+            notes = notes.filter(note => note.y > -50 && !note.hit);
+
+            // Reducir contador del texto de calificación
+            if (ratingTimer > 0) ratingTimer--;
+
+            // 4. Condición de Derrota (Game Over)
+            if (health <= 0) {
+                gameRunning = false;
+                alert(`¡PARADOJA TEMPORAL! Te quedaste sin ritmo en el tiempo.\nPuntuación Final: ${score}`);
+                document.location.reload();
+            }
+        }
+
+        function draw() {
+            // Fondo dinámico según la época
+            ctx.fillStyle = "#0c0c16";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Efecto rejilla temporal de fondo
+            ctx.strokeStyle = eraColor + "22"; // Color con opacidad baja
+            ctx.lineWidth = 2;
+            for(let i=0; i<canvas.width; i+=40) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+            }
+
+            // Cabecera de la Época actual
+            ctx.fillStyle = eraColor;
+            ctx.font = "24px 'Impact'";
+            ctx.textAlign = "center";
+            ctx.fillText(`LINEA TEMPORAL: ${currentEra}`, canvas.width / 2, 40);
+
+            // Dibujar Receptores superiores (Las flechas guía grises)
+            LANES.forEach((lane) => {
+                ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+                ctx.strokeStyle = lane.color;
+                ctx.lineWidth = 3;
+                
+                // Cuadrado contenedor
+                ctx.fillRect(lane.x - 25, targetY - 25, 50, 50);
+                ctx.strokeRect(lane.x - 25, targetY - 25, 50, 50);
+
+                // Símbolo de flecha centrado
+                ctx.fillStyle = "#666";
+                ctx.font = "32px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText(lane.symbol, lane.x, targetY + 11);
+            });
+
+            // Dibujar las Notas flotantes
+            notes.forEach(note => {
+                if (!note.hit) {
+                    let lane = LANES[note.lane];
+                    ctx.fillStyle = lane.color;
+                    
+                    // Cuerpo de la flecha rítmica
+                    ctx.fillRect(lane.x - 22, note.y - 22, 44, 44);
+                    
+                    ctx.fillStyle = "#fff";
+                    ctx.font = "bold 28px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText(lane.symbol, lane.x, note.y + 10);
+                }
+            });
+
+            // Dibujar Barra de Vida estilo FNF (Verde = Jugador, Rojo = Paradoja)
+            const barW = 400;
+            const barH = 15;
+            const barX = canvas.width / 2 - barW / 2;
+            const barY = 560;
+
+            ctx.fillStyle = "#ff2a2a"; // Lado del oponente (Rojo)
+            ctx.fillRect(barX, barY, barW, barH);
+
+            ctx.fillStyle = "#00ff66"; // Tu lado (Verde)
+            ctx.fillRect(barX, barY, barW * (health / 100), barH);
+
+            // Íconos simplificados de la barra de vida
+            ctx.font = "24px Arial";
+            let iconX = barX + (barW * (health / 100)) - 12;
+            ctx.fillText("🧑‍🎤", iconX + 15, barY + 30); // Boyfriend
+            ctx.fillText("⏳", iconX - 15, barY + 30); // El Tiempo
+
+            // Mostrar Calificación (SICK, GOOD, MISS)
+            if (ratingTimer > 0) {
+                ctx.font = "italic 42px 'Impact'";
+                if (ratingText === "¡SICK!") ctx.fillStyle = "#00ffff";
+                else if (ratingText === "GOOD") ctx.fillStyle = "#00ff66";
+                else if (ratingText === "BAD") ctx.fillStyle = "#ffaa00";
+                else ctx.fillStyle = "#ff2a2a";
+
+                ctx.textAlign = "center";
+                ctx.fillText(ratingText, canvas.width / 2, 300);
+            }
+
+            // Datos de Interfaz (Score y Combo)
+            ctx.fillStyle = "#fff";
+            ctx.font = "20px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText(`Puntuación: ${score}  |  Combo: ${combo}`, canvas.width / 2, 620);
+        }
+
+        // Bucle del motor de juego
+        function loop() {
+            if (!gameRunning) return;
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+    </script>
+</body>
+</html>
