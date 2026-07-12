@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitio en Mantenimiento</title>
+  <style>
+    /* --- FONDO ESTILO SEGA / SONIC --- */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial Black', Gadget, sans-serif;
+      /* Degradado que emula el cielo de Green Hill / zonas de Sonic */
+      background: linear-gradient(to bottom, #002244 0%, #0055a5 50%, #0088ff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      color: #fff;
+    }
+
+   
+
+    /* --- TARJETA CENTRAL --- */
+    .contenedor {
+      position: relative;
+      background: rgba(0, 0, 0, 0.65); /* Fondo oscuro semitransparente */
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+      border: 4px solid #000000; /* Borde amarillo anillo de Sonic */
+      text-align: center;
+      max-width: 450px;
+      width: 90%;
+      z-index: 1;
+      backdrop-filter: blur(5px); /* Suaviza el fondo */
+    }
+
+    .sonic {
+      width: 250px; /* Mantengo tus medidas guardadas */
+      height: auto; 
+      
+      /* Tu configuración de posición */
+      position: relative; 
+      left: -20px;        
+      top: 0px;           
+
+      margin-bottom: 15px;
+ 
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 10px 0;
+      color: #ffcc00; /* Texto color anillo */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+      font-family: sans-serif; /* Texto normal más legible */
+      margin: 15px 0 0 0;
+    }
+
+    /* --- ESTILO DEL NUEVO BOTÓN --- */
+    .btn-volver {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 28px;
+      background-color: #e52521; /* Rojo clásico de los zapatos de Sonic */
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      border-radius: 50px; /* Forma de píldora */
+      border: 3px solid #ff0000; /* Borde amarillo anillo */
+      box-shadow: 0px 5px 0px #a0120f; /* Sombra 3D estilo arcade */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.15s ease-in-out;
+    }
+
+
+
+ 
+  </style>
+</head>
+<body>
+
+  <div class="contenedor">
+    <!-- Tu imagen de Sonic -->
+    <img src="Logo/sonic-the-hedgehog.gif" alt="Sonic dice que no" class="sonic">
+    <h1>Zona en Mantenimiento </h1>
+    <p>  <br>No pregunten</p>
+
+    <a href="/index.html" class="btn-volver">Regresar al Inicio</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasarela de Pago Segura</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Botón de Volver al Inicio flotante en la esquina */
+        .back-to-index {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #555555;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 10px 18px;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            z-index: 100;
+            border: 1px solid #e2e8f0;
+        }
+
+        .back-to-index:hover {
+            color: #0066cc;
+            border-color: #0066cc;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Contenedor principal de dos columnas */
+        .checkout-container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            width: 100%;
+            max-width: 850px;
+            min-height: 500px;
+            overflow: hidden;
+        }
+
+        /* Columna Izquierda: Formulario */
+        .form-column {
+            flex: 1;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Columna Derecha: Imagen decorativa */
+        .image-column {
+            flex: 1;
+            background-color: #eaeaea;
+            position: relative;
+        }
+
+        .image-column img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajusta la imagen para que llene el espacio sin deformarse */
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        p.desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .card-logos {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #ccc;
+        }
+
+        .card-logos .fa-cc-visa { color: #1a1f71; margin-right: 10px; }
+        .card-logos .fa-cc-mastercard { color: #ea001b; }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #333;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0066cc;
+            box-shadow: 0 0 5px rgba(0, 102, 204, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #004ea3;
+        }
+
+        /* Pantalla de la broma (Oculta por defecto) */
+        .joke-response {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            padding: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .joke-response i {
+            font-size: 3.5rem;
+            color: #d9534f;
+            margin-bottom: 15px;
+        }
+
+        .joke-response h3 {
+            font-size: 1.3rem;
+            color: #d9534f;
+            margin-bottom: 12px;
+        }
+
+        .joke-response p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: #f4f6f9;
+            border: 1px solid #ccc;
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .back-to-index {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .checkout-container {
+                flex-direction: column;
+                margin-top: 50px; /* Espacio para que el botón no tape el formulario en móvil */
+            }
+            .image-column {
+                display: none; /* Esconde la imagen en teléfonos para que no estorbe */
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/index.html" class="back-to-index">
+        <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+
+
+
+
+    <div class="checkout-container">
+        <div class="form-column">
+            <div id="form-block">
+                <h2>Formulario de Donación</h2>
+                
+                <div class="card-logos">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                </div>
+
+                <form id="pay-form" onsubmit="triggerJoke(event)">
+                    <div class="form-group">
+                        <label>Nombre del Titular</label>
+                        <input type="text" placeholder="Como aparece en la tarjeta" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Número de Tarjeta</label>
+                        <input type="text" placeholder="1234 5678 9123 4567" maxlength="19" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha de Expiración</label>
+                            <input type="text" placeholder="MM/AA" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código de Seguridad (CVV)</label>
+                            <input type="password" placeholder="•••" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Donar Fondos</button>
+                </form>
+            </div>
+
+            <div id="joke-block" class="joke-response">
+                
+                <h3>Usted es goku Super sayayin 3</h3>
+            
+                <button class="btn-close" onclick="window.history.back()">Volver</button>
+            </div>
+
+        </div>
+
+        <div class="image-column">
+            <img src="/Recursos/Logo/goku.jpg" alt="Imagen del proyecto">
+        </div>
+
+    </div>
+
+    <script>
+        function triggerJoke(event) {
+            event.preventDefault(); // Evita envíos reales
+            
+            // Oculta el formulario y muestra el texto de broma
+            document.getElementById('form-block').style.display = 'none';
+            document.getElementById('joke-block').style.display = 'flex';
+        }
+    </script>
+
+</body>
+</html>

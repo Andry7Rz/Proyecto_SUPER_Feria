@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (archivoDestino) {
                 const rutaDestino = `articulos/${epocaActual}/${archivoDestino}.html`;
-                const rutaErrorPersonalizado = `articulos/pantalla-espera.html`;
+                const rutaErrorPersonalizado = `/Recursos/error.html`;
 
                 // Hacemos una consulta rápida al sistema de archivos para ver si el HTML existe
                 fetch(rutaDestino, { method: 'HEAD' })
