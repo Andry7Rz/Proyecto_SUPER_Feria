@@ -4,7 +4,6 @@
         box-sizing: border-box;
         font-family: 'Segoe UI';
     }
-
 body {
     display: flex;
     background-color: #f4f4f4;
@@ -91,9 +90,32 @@ estoy loco me hablo a mi mismo*/
     background-color: var(--color-maquina);
     transition: 0.3s;
 }
+/*secciones del header*/
 .page-header {
-    padding: 60px 0;
-    margin-bottom: 40px;
+
+    background-color: rgba(255, 255, 255, 0.8); 
+    
+   
+    border-bottom: 2px solid var(--color-maquina);
+    
+
+    padding: 60px 80px;
+    margin-bottom: 30px;
+    
+ 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.page-header {
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(10px);        
+    -webkit-backdrop-filter: blur(10px);
+     padding-top: 2rem;
+    border-bottom: 2px solid var(--color-maquina);
+    
+ 
+    width: 100%;
+    position: relative;
+    z-index: 10;
 }
 .header-container {
     display: flex;
@@ -104,43 +126,39 @@ estoy loco me hablo a mi mismo*/
 .header-info {
     flex: 1;
 }
-
 .system-badge {
     color: var(--color-maquina);
     font-family: 'Orbitron', sans-serif;
     font-size: 0.8rem;
     letter-spacing: 2px;
 }
-
 .main-title {
     font-size: 3.5rem;
     margin: 10px 0;
     line-height: 1;
 }
-
 .highlight {
     color: var(--color-maquina);
     text-shadow: 0 0 15px var(--color-maquina);
 }
-
-/* --- COLUMNA DERECHA (MARCO DE IMAGEN) --- */
+/*foto de los indios esos*/
 .header-visual {
     flex: 1;
     display: flex;
     justify-content: center;
 }
-
 .image-frame {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    border: 2px solid var(--color-maquina);
+    width: 100%;        
+    height: 300px;  
+      border: 2px solid var(--color-maquina);
     border-radius: 15px;
+    overflow: hidden;   
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 20px var(--color-maquina);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 20px var(--color-maquina);
 }
-
 .header-img {
     position: absolute;
     width: 100%;
@@ -149,14 +167,12 @@ estoy loco me hablo a mi mismo*/
     opacity: 0;
     transition: opacity 0.8s ease;
 }
-
-/* Lógica de visibilidad (Igual que el carrusel) */
+/*dependiendo la epoca establecida en body. se nnuestra la imagen correspondiente*/
 body.epoca-1 .img-epoca-1 { opacity: 1; }
 body.epoca-2 .img-epoca-2 { opacity: 1; }
 body.epoca-3 .img-epoca-3 { opacity: 1; }
 body.epoca-4 .img-epoca-4 { opacity: 1; }
-
-/* Efecto de línea de escaneo (Muy Cyberpunk) */
+/*ganas de joder*/
 .scanline {
     width: 100%;
     height: 2px;
@@ -166,73 +182,11 @@ body.epoca-4 .img-epoca-4 { opacity: 1; }
     top: 0;
     animation: scanning 3s linear infinite;
 }
-
 @keyframes scanning {
     0% { top: 0; }
     100% { top: 100%; }
 }
-
-
-.page-header {
-    /* Un color un poco más oscuro o claro que el fondo general */
-    background-color: rgba(255, 255, 255, 0.8); 
-    
-    /* Una línea brillante al final para marcar el límite */
-    border-bottom: 2px solid var(--color-maquina);
-    
-    /* Espaciado para que el contenido no pegue con los bordes */
-    padding: 60px 80px;
-    margin-bottom: 30px;
-    
-    /* Sombra para dar profundidad */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-.page-header {
-    background: rgba(255, 255, 255, 0.03); /* Un blanco casi invisible */
-    backdrop-filter: blur(10px);           /* El efecto de desenfoque */
-    -webkit-backdrop-filter: blur(10px);
-    
-    border-bottom: 2px solid var(--color-maquina);
-    
-    /* Para que se extienda de lado a lado aunque el contenido esté centrado */
-    width: 100%;
-    position: relative;
-    z-index: 10;
-}
-
-.image-frame {
-    width: 100%;        /* O un ancho fijo, ej: 400px */
-    height: 300px;      /* Asegúrate de darle una altura suficiente */
-    overflow: hidden;   /* Esto evita que la imagen se salga del borde redondeado */
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* --- espacio --- */
-
+/*  espacio */
 /* --- ESPACIADO GENERAL DE LAS SECCIONES --- */
 .content {
     display: flex;
@@ -243,66 +197,24 @@ body.epoca-4 .img-epoca-4 { opacity: 1; }
     margin: 0 auto; /* Centra todo el contenido en pantallas gigantes */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-.page-header {
-    text-align: center;
-    padding-top: 2rem;
-}
-
-/* --- LÓGICA DINÁMICA DE LA SECCIÓN 2 (INFO HISTÓRICA) --- */
 .info-epoca {
     display: none; /* Ocultamos todas las infos por defecto */
     animation: fadeIn 0.8s ease-in-out;
 }
-
 /* Solo se muestra la info que coincide con la época del body */
 body.epoca-1 .epoca-1-info { display: block; }
 body.epoca-2 .epoca-2-info { display: block; }
 body.epoca-3 .epoca-3-info { display: block; }
 body.epoca-4 .epoca-4-info { display: block; }
 
-/* --- DISEÑO DE LAS CARTILLAS (GRID) --- */
+/*cartilas dieseño*/
 .cartillas-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Se adaptan al ancho */
     gap: 20px;
     margin-top: 20px;
 }
-
-.cartilla {
-    background: rgba(26, 26, 46, 0.6);
-    border: 1px solid var(--color-maquina);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
-}
-
-.cartilla:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--color-maquina);
-}
-
-.cartilla img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-/* --- SECCIÓN FINAL: PERFIL DEL INGENIERO --- */
+/* coso para mis datos y eso*/
 .developer-profile {
     text-align: center;
     border-top: 2px dashed rgba(255, 255, 255, 0.2);
@@ -325,74 +237,15 @@ body.epoca-4 .epoca-4-info { display: block; }
     border-radius: 50%;
     border: 2px solid var(--color-maquina);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*no tocar*/
 .page-section {
- 
-  
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*botones de la epoca diseño*/
 .botones-epoca {
     display: flex;
     justify-content: space-between;
@@ -400,7 +253,6 @@ body.epoca-4 .epoca-4-info { display: block; }
     margin-top: 20px;
     width: 100%;
 }
-
 .step-btn {
     flex: 1; /* Todos los botones del mismo ancho */
     display: flex;
@@ -434,9 +286,7 @@ body.epoca-4 .epoca-4-info { display: block; }
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
-/* --- EL BOTÓN ACTIVO --- */
-/* Cuando el body tenga la clase de la época, ese botón específico se enciende */
+/* Cuando el body tenga la clase de la época, ese botón específico se enciende para dar idea que esta ahi */
 body.epoca-1 .step-btn[data-step="1"],
 body.epoca-2 .step-btn[data-step="2"],
 body.epoca-3 .step-btn[data-step="3"],
@@ -447,40 +297,12 @@ body.epoca-4 .step-btn[data-step="4"] {
     box-shadow: 0 0 15px rgba(0, 188, 212, 0.4), inset 0 0 10px rgba(0, 188, 212, 0.2);
     transform: scale(1.05);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* cartilla */
-
-
-
-/* Contenedor principal */
 .cartillas-container {
     display: flex;
     flex-direction: column;
     gap: 50px; /* Espacio entre cada cartilla */
     margin-top: 30px;
 }
-
 /* Estilo base de la cartilla */
 .cartilla-zigzag {
     display: flex;
@@ -492,14 +314,9 @@ body.epoca-4 .step-btn[data-step="4"] {
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: 0.3s;
 }
-
-
-
-/* Ajuste de las cajas internas */
 .cartilla-img {
     flex: 1; /* Ocupa el 50% */
 }
-
 .cartilla-img img {
     width: 100%;
     height: 250px;
@@ -507,26 +324,21 @@ body.epoca-4 .step-btn[data-step="4"] {
     border-radius: 15px;
     border: 2px solid var(--color-maquina);
 }
-
 .cartilla-info {
     flex: 1; /* Ocupa el otro 50% */
     padding: 20px;
 }
-
 .cartilla-info h4 {
     color: var(--color-maquina);
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-/* Responsivo: Si se ve en celular, que vuelvan a estar una arriba de otra */
 @media (max-width: 768px) {
     .cartilla-zigzag, .cartilla-zigzag:nth-child(even) {
         flex-direction: column;
     }
 }
-
-
 /* Esto aplicará el color a TODO lo que esté dentro de la info de época */
 .info-epoca {
     color: black; /* Aplica el color a párrafos y textos generales */
@@ -546,185 +358,30 @@ body.epoca-4 .step-btn[data-step="4"] {
     font-size: 1.05rem;
 }
 
-/* Opcional: Un borde brillante que combine */
 .cartilla-zigzag {
     border: 1px solid var(--color-maquina);
     box-shadow: inset 0 0 15px  rgba(255, 0, 0, 0.5), 0 0 10px rgba(var(--color-maquina-rgb), 0.2);
 }
-
 .cartilla-info h4, 
 .cartilla-info p {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Sombra negra para legibilidad */
 }
-
-/* Efecto Neón para los títulos */
 .cartilla-info h4 {
     text-shadow: 0 0 8px white;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Estilos para el Timeline (Medidor) */
 .timeline-container {
     width: 80%;
     margin: 20px 0;
     text-align: center;
 }
-
-#decade-slider {
-  
-    width: 100%;
-    height: 6px;
-    background: #334756;
-    border-radius: 10px;
-    outline: none;
-    cursor: pointer;
-    margin: 20px 0;
-}
-
-
-#decade-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    background: #00bcd4;
-    border: 3px solid #ffffff;
-    border-radius: 50%;
-    cursor: grab; /* Indica que se puede agarrar */
-    box-shadow: 0 0 15px rgba(0, 188, 212, 0.8), 0 0 30px rgba(0, 188, 212, 0.4);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-
-#decade-slider::-webkit-slider-thumb:active {
-    cursor: grabbing; /* Cambia el icono al arrastrar */
-    transform: scale(1.4); /* Crece mientras lo mueves */
-    background: #ffffff;
-    }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-
-
-.form-registro {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 500px;
-}
-
-.grupo {
-    margin-bottom: 1.2rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.grupo label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.grupo input, .grupo select, .grupo textarea {
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.btn-enviar {
-    background-color: #ffcc00;
-    color: black;
-    border: none;
-    padding: 1rem 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.btn-enviar:hover {
-    background-color: #e6b800;
-}
-
-
-
-
-
-
-
-
-
 #mapa-venezuela {
-    width: 100%;  /* Esto obliga al SVG a ocupar el ancho de su padre */
-    height: 100%; /* Mantiene la proporción para que no se vea estirado */
+    width: 100%; 
+    height: 100%; 
 }
 #map-canvas {
     width: 120%;
-    max-width: 800px; /* O el tamaño que prefieras */
+    max-width: 800px; 
     margin: 0 auto;
     padding: 20px;
     display: flex;
@@ -732,76 +389,16 @@ body.epoca-4 .step-btn[data-step="4"] {
     align-items: center;
 
 }
-
-
-
-
-
 #map-canvas, #mapa-venezuela, path {
-    border: none !important;      /* Quita cualquier borde visual */
-    outline: none !important;     /* Quita la línea de resaltado al hacer clic */
-    -webkit-tap-highlight-color: transparent; /* Quita el destello azul en móviles */
+    border: none !important;      
+    outline: none !important;    
+    -webkit-tap-highlight-color: transparent; 
 }
-
-/* Por si la caja del mapa tiene un borde heredado */
 #map-canvas {
     border: 0;
-    box-shadow: none; /* A veces una sombra parece un borde */
+    box-shadow: none; 
 }
-
-
-
-
-
-.slider-container {
-    max-width: 600px; 
-    margin: 20px auto;
-}
-
-
-
-
-.articulo-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px;
-    font-family: 'Georgia', serif; /* Estilo histórico */
-    line-height: 1.6;
-    background: #fff;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-.galeria {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.galeria img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 3px solid #eee;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* letras */
-
-
-
-
+/*letras*/
 nav a {
     display: inline-block;
     margin: 20px;
@@ -810,50 +407,8 @@ nav a {
     font-weight: bold;
     
 }
-
-
-
 /* aca terminaba esta loquera tipo la estructura */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*que prenda cuando lo seleccionas*/
 #mapa-venezuela path:hover {
     filter: brightness(1.4) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
     cursor: pointer;
@@ -861,104 +416,10 @@ nav a {
     stroke: #ffffff !important; 
     stroke-width: 1px !important;
 }
-
-
 #mapa-venezuela path {
     /* Esto hará que cualquier cambio de color (fill) dure 0.8 segundos */
     transition: fill 0.8s ease-in-out, stroke 0.8s ease-in-out;
 }
-
-
-
-
-
-
-
-
-
-
-.labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.step {
-    text-align: center;
-    color: #546e7a;
-    transition: all 0.4s;
-}
-
-.step span {
-    display: block;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-
-
-
-.roman {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.desc {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 5px;
-}
-
-
-
-/* Cuando la clase de la época esté activa en el body, iluminamos el texto correspondiente */
-body.epoca-1 .step[data-step="1"],
-body.epoca-2 .step[data-step="2"],
-body.epoca-3 .step[data-step="3"],
-body.epoca-4 .step[data-step="4"] {
-    color: #ffff00;
-    text-shadow: 0 0 10px #000000;
-    transform: translateY(-5px);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* --- Estilos Generales (Por defecto) --- */
@@ -966,92 +427,34 @@ body {
     transition: background-color 1s ease, color 0.5s ease;
     font-family: 'Segoe UI', sans-serif;
 }
-
-/* --- Diseño Época 1 (Indígena/Naturaleza) --- */
+/*fondos colores */
 body.epoca-1 {
-    background-color: #117a65; /* Un azul oscuro profundo */
+    background-color: #117a65; 
     color: #93a1a1;
 }
-
-/* --- Diseño Época 2 (Colonial/Pergamino) --- */
 body.epoca-2 {
-    background-color: #e8d5b5d4; /* Fondo color papel viejo */
+    background-color: #e8d5b5d4; 
     color: #5d4037;
 }
-/* Puedes cambiar el estilo del título solo en esta época */
 body.epoca-2 h1 {
-    font-family: 'Pinyon Script', cursive; /* Una fuente tipo pluma si la tienes */
+    font-family: 'Pinyon Script', cursive; 
     border-bottom: 2px solid #5d4037;
 }
-
-/* --- Diseño Época 3 (Republicana/Solemne) --- */
 body.epoca-3 {
     background-color: #b78152e4; 
     color: #222;
 }
-
-/* --- Diseño Época 4 (Actual/Tecnológica) --- */
 body.epoca-4 {
-    background-color: #032456a4; /* Gris muy oscuro (tipo GitHub) */
+    background-color: #032456a4;
     color: #58a6ff;
 }
 
-#tooltip {
-    position: absolute;
-    background-color: #333; /* Fondo oscuro */
-    color: #ffffff;         /* Texto blanco */
-    padding: 8px 12px;
-    border-radius: 4px;
-    pointer-events: none;
-    opacity: 0;
-    z-index: 10000;
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* =========================================
-   ESTACIÓN 1: ÉPOCA PREHISPÁNICA
-   ========================================= */
+/* importante colores del mapa wazaaaaaa 3*/
 body.epoca-1 #map-canvas {
    
     border: 5px solid #b35600; 
 }
-
-/* IMPORTANTE: Ahora el selector es directo: .clase */
 body.epoca-1 path { stroke: none !important; }
 
 body.epoca-1 path.indigena-timotocuica { fill: #8b2913e2; } 
@@ -1061,11 +464,7 @@ body.epoca-1 path.indigena-llanos      { fill: #daa520ca; }
 body.epoca-1 path.indigena-pemon       { fill: #b14b02c8; }
 body.epoca-1 path.indigena-guaiqueri   { fill: #4683b4ce; }
 
-/* =========================================
-   ESTACIÓN 2: ÉPOCA COLONIAL
-   ========================================= */
-
-
+/*epoca.2*/
 
 body.epoca-2 #map-canvas {
     
@@ -1079,158 +478,60 @@ body.epoca-2 path {
     filter: sepia(0.5);
 }
 
-/* Selectores limpios para las Provincias */
+
 body.epoca-2 path.colonia-caracas   { fill: #8b4513; }
 body.epoca-2 path.colonia-maracaibo { fill: #cd853f; }
 body.epoca-2 path.colonia-barinas   { fill: #b45a00; }
 body.epoca-2 path.colonia-guayana   { fill: #5d6d3e; }
-body.epoca-2 path.colonia-cumana    { fill: #a67c52; } /* Antes tenías 'oriente', ahora 'cumana' */
+body.epoca-2 path.colonia-cumana    { fill: #a67c52; } 
 body.epoca-2 path.colonia-margarita { fill: #d2691e; }
 
-
-
-
-
-
-
-
-/* =========================================
-   ESTACIÓN 3: REPÚBLICA (Gran Colombia 1824)
-   ========================================= */
-
-
-
-
-
-
+/*epoca 3*/
 body.epoca-3 #map-canvas {
      /* Fondo blanco limpio, como papel de decreto */
     border: 4px double #333333; /* Un borde doble más elegante */
 }
 
-/* Estilo de los bordes de los estados */
 body.epoca-3 path {
     stroke: #000000;
     stroke-width: 0.6px;
 }
+body.epoca-3 path.republica-zulia { fill: #f1c40fd9; }
+body.epoca-3 path.republica-venezuela { fill: #297fb9dd; }
+body.epoca-3 path.republica-orinoco {  fill: #c03a2bd9; }
 
-/* Colores de los 3 Grandes Departamentos */
+/*epoca-4*/
 
-/* 1. Departamento del Zulia (Amarillo patrio) */
-body.epoca-3 path.republica-zulia { 
-    fill: #f1c40fd9; 
-}
-
-/* 2. Departamento de Venezuela (Azul patrio) */
-body.epoca-3 path.republica-venezuela { 
-    fill: #297fb9dd; 
-}
-
-/* 3. Departamento del Orinoco (Rojo patrio) */
-body.epoca-3 path.republica-orinoco { 
-    fill: #c03a2bd9; 
-}
-
-
-
-
-
-
-/* --- ÉPOCA 4: ARMONÍA TECNOLÓGICA (MODERNA) --- */
-
-/* Región Capital y Central */
 body.epoca-4 #VE-A { fill: #222c1b; } /* Dto. Capital */
 body.epoca-4 #VE-M { fill: #2b3d21; } /* Miranda */
 body.epoca-4 #VE-W { fill: #284728; } /* La Guaira */
 body.epoca-4 #VE-D { fill: #2e5337; } /* Aragua */
 body.epoca-4 #VE-G { fill: #355e34; } /* Carabobo */
-
-/* Región Occidental y Zulia */
 body.epoca-4 #VE-V { fill: #1a763c; } /* Zulia */
 body.epoca-4 #VE-I { fill: #1f8d25; } /* Falcón */
 body.epoca-4 #VE-K { fill: #24a366; } /* Lara */
 body.epoca-4 #VE-U { fill: #29b95b; } /* Yaracuy */
-
-/* Región Los Andes (Tu zona) */
 body.epoca-4 #VE-S { fill: #148f77; } /* Táchira */
 body.epoca-4 #VE-L { fill: #17a589; } /* Mérida */
 body.epoca-4 #VE-T { fill: #1abc9c; } /* Trujillo */
-
-/* Región de los Llanos */
 body.epoca-4 #VE-C { fill: #117a65; } /* Apure */
 body.epoca-4 #VE-E { fill: #0e6655; } /* Barinas */
 body.epoca-4 #VE-P { fill: #0b5345; } /* Portuguesa */
 body.epoca-4 #VE-H { fill: #145a32; } /* Cojedes */
 body.epoca-4 #VE-J { fill: #186a3b; } /* Guárico */
-
-/* Región Oriental e Insular */
 body.epoca-4 #VE-B { fill: #3c8c21; } /* Anzoátegui */
 body.epoca-4 #VE-N { fill: #105837; } /* Monagas */
 body.epoca-4 #VE-R { fill: #206d31; } /* Sucre */
 body.epoca-4 #VE-O { fill: #27a04e; } /* Nueva Esparta */
-
-/* Región de Guayana */
 body.epoca-4 #VE-F { fill: #3e9455; } /* Bolívar */
 body.epoca-4 #VE-X { fill: #297551; } /* Amazonas */
 body.epoca-4 #VE-Y { fill: #388150; } /* Delta Amacuro */
 body.epoca-4 #VE-Z { fill : #296b4c;} 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* cosas para la indetificacion de  */
-
+/* cosas para la indetificacion de la leyenda */
 /* Contenedor principal de la leyenda */
 .mapa-leyenda {
-   
-    
     z-index: 9000;     /* Asegúrate que esté por encima del mapa pero debajo del menú lateral */
-    
     /* Estética de panel */
     background: rgba(15, 15, 15, 0.9);
     border-right: 4px solid var(--color-maquina); /* Una barra de color en la pared derecha */
@@ -1260,7 +561,7 @@ body.epoca-4 #VE-Z { fill : #296b4c;}
     color: #ffffff;
 }
 
-/* Estilo de cada fila de información */
+
 .leyenda-item {
     display: flex;
     align-items: center;
@@ -1284,17 +585,547 @@ body.epoca-4 #VE-Z { fill : #296b4c;}
     color: rgba(255, 255, 255, 0.85);
     font-weight: 500;
 }
-
-/* --- INTERRUPTOR DINÁMICO DE ÉPOCAS --- */
 .leyenda-bloque {
     display: none; /* Oculta todas las leyendas por defecto */
 }
-
 /* Muestra solo la leyenda que corresponde a la clase activa en el body */
 body.epoca-1 .leyenda-epoca-1 { display: block; }
 body.epoca-2 .leyenda-epoca-2 { display: block; }
 body.epoca-3 .leyenda-epoca-3 { display: block; }
 body.epoca-4 .leyenda-epoca-4 { display: block; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
